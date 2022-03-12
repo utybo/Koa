@@ -41,7 +41,19 @@ I do not currently have time to write full documentation for this, have a look a
 
 ## Usage
 
-You can add the libraries via [JitPack](https://jitpack.io).
+You can add the libraries via [JitPack](https://jitpack.io/#guru.zoroark/koa).
+
+```gradle
+repositories {
+    maven { url 'https://jitpack.io' }
+}
+
+dependencies {
+    implementation 'guru.zoroark:koa:main-SNAPSHOT'
+    implementation 'guru.zoroark:koa-ktor:main-SNAPSHOT'
+    implementation 'guru.zoroark:koa-ktor-ui:main-SNAPSHOT'
+}
+```
 
 The following modules are present:
 
