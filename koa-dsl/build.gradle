@@ -1,0 +1,8 @@
+plugins {
+    id 'guru.zoroark.koa.kotlin-library-conventions'
+}
+
+dependencies {
+    api libs.swaggerCore.models
+    api libs.swaggerCore.core
+}

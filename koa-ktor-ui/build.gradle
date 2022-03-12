@@ -1,0 +1,9 @@
+plugins {
+    id 'guru.zoroark.koa.kotlin-library-conventions'
+}
+
+dependencies {
+    implementation libs.ktor.server.core
+
+    api libs.swaggerUi
+}

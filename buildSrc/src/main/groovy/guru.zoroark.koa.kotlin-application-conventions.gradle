@@ -1,0 +1,4 @@
+plugins {
+    id 'guru.zoroark.koa.kotlin-common-conventions'
+    id 'application'
+}

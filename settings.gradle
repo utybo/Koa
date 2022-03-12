@@ -1,0 +1,7 @@
+rootProject.name = 'koa'
+include(
+    'koa-dsl',
+    'koa-ktor',
+    'koa-ktor-ui',
+    'samples:ktor'
+)

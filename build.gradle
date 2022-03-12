@@ -1,0 +1,10 @@
+plugins {
+    // TODO dokka ?
+}
+
+repositories {
+    mavenCentral()
+}
+
+version = "0.0.1-SNAPSHOT"
+group = "guru.zoroark.koa"

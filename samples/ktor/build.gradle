@@ -1,0 +1,16 @@
+plugins {
+    id 'guru.zoroark.koa.kotlin-application-conventions'
+}
+
+dependencies {
+    implementation project(":koa-ktor")
+    implementation project(":koa-ktor-ui")
+
+    implementation libs.ktor.server.netty
+    implementation libs.ktor.server.jackson
+    implementation libs.logback
+}
+
+application {
+    mainClass = 'guru.zoroark.koa.samples.ktor.MainKt'
+}
