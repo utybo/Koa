@@ -1,3 +1,5 @@
+@file:Suppress("MatchingDeclarationName")
+
 package guru.zoroark.koa.samples.ktor
 
 import guru.zoroark.koa.dsl.schema
@@ -6,19 +8,27 @@ import guru.zoroark.koa.ktor.describe
 import guru.zoroark.koa.ktor.respondOpenApiDocument
 import guru.zoroark.koa.ktor.ui.KoaSwaggerUi
 import guru.zoroark.koa.ktor.ui.swaggerUi
-import io.ktor.application.*
-import io.ktor.features.*
-import io.ktor.http.*
-import io.ktor.jackson.*
-import io.ktor.request.*
-import io.ktor.response.*
-import io.ktor.routing.*
-import io.ktor.server.engine.*
-import io.ktor.server.netty.*
+import io.ktor.application.call
+import io.ktor.application.install
+import io.ktor.features.ContentNegotiation
+import io.ktor.http.HttpStatusCode
+import io.ktor.http.HttpStatusCode.Companion.NoContent
+import io.ktor.http.HttpStatusCode.Companion.OK
+import io.ktor.jackson.jackson
+import io.ktor.request.receive
+import io.ktor.response.respond
+import io.ktor.routing.get
+import io.ktor.routing.patch
+import io.ktor.routing.put
+import io.ktor.routing.route
+import io.ktor.routing.routing
+import io.ktor.server.engine.embeddedServer
+import io.ktor.server.netty.Netty
 import io.swagger.v3.oas.models.media.StringSchema
 
 data class ServerState(var myString: String, var myNumber: Int)
 
+@Suppress("LongMethod", "MagicNumber")
 fun main() {
     var state = ServerState("initial value", 1234)
     val server = embeddedServer(Netty, port = 8080) {
@@ -51,7 +61,7 @@ fun main() {
                     description = "Returns the data stored on this server as a JSON object."
                     tags += "read"
 
-                    200 response "application/json" {
+                    OK.value response "application/json" {
                         description = "The state stored on the server."
                         schema(ServerState("Hello", 9999))
                     }
@@ -62,7 +72,9 @@ fun main() {
                     call.respond(HttpStatusCode.NoContent)
                 } describe {
                     summary = "Set the data stored on this server."
-                    description = "Set the data stored on this server. No validation is done, which is not very safe to be honest."
+                    description =
+                        "Set the data stored on this server. No validation is done, " +
+                                "which is not very safe to be honest."
                     tags += "write"
 
                     "application/json" requestBody {
@@ -70,7 +82,7 @@ fun main() {
                         schema(ServerState("Hello", 9999))
                     }
 
-                    204 response {
+                    NoContent.value response {
                         description = "Data on this server was set to the requested data"
                     }
                 }
@@ -90,7 +102,7 @@ fun main() {
                         example = "Hello there"
                     }
 
-                    204 response {
+                    NoContent.value response {
                         description = "It worked!"
                     }
                 }

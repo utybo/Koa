@@ -2,8 +2,9 @@ package guru.zoroark.koa.ktor
 
 import guru.zoroark.koa.dsl.DescriptionBuilder
 import guru.zoroark.koa.dsl.KoaDsl
-import io.ktor.routing.*
-import io.ktor.util.pipeline.*
+import io.ktor.routing.Route
+import io.ktor.routing.application
+import io.ktor.util.pipeline.ContextDsl
 import io.swagger.v3.oas.models.PathItem
 
 @ContextDsl

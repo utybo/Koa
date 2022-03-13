@@ -1,10 +1,18 @@
 package guru.zoroark.koa.ktor
 
-import guru.zoroark.koa.dsl.*
-import io.ktor.application.*
-import io.ktor.util.*
+import guru.zoroark.koa.dsl.KoaDslContext
+import guru.zoroark.koa.dsl.RootBuilder
+import guru.zoroark.koa.dsl.RootDsl
+import io.ktor.application.Application
+import io.ktor.application.ApplicationCallPipeline
+import io.ktor.application.ApplicationFeature
+import io.ktor.application.feature
+import io.ktor.util.AttributeKey
 import io.swagger.v3.core.util.Json
-import io.swagger.v3.oas.models.*
+import io.swagger.v3.oas.models.Components
+import io.swagger.v3.oas.models.Operation
+import io.swagger.v3.oas.models.PathItem
+import io.swagger.v3.oas.models.Paths
 import io.swagger.v3.oas.models.media.Schema
 
 class Koa(config: Configuration) {
@@ -41,7 +49,7 @@ class Koa(config: Configuration) {
         return result
     }
 
-    fun createContext(): KoaDslContext = OpenApiPluginDslContext(this)
+    fun createContext(): KoaDslContext = KoaPluginDslContext(this)
 
     fun registerSchemaIfNotExists(name: String, schema: Schema<Any>) {
         storedSchemas.putIfAbsent(name, schema)

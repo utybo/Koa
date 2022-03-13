@@ -1,16 +1,19 @@
 package guru.zoroark.koa.ktor
 
-import io.ktor.routing.*
-import java.util.*
+import io.ktor.routing.HttpMethodRouteSelector
+import io.ktor.routing.PathSegmentConstantRouteSelector
+import io.ktor.routing.PathSegmentParameterRouteSelector
+import io.ktor.routing.Route
+import java.util.LinkedList
 
 data class EndpointMetadata(
-        val httpMethod: String? = null,
-        val httpPath: List<String> = listOf()
+    val httpMethod: String? = null,
+    val httpPath: List<String> = listOf()
 )
 
 data class MutableEndpointMetadata(
-        var httpMethod: String? = null,
-        val httpPath: MutableList<String> = LinkedList()
+    var httpMethod: String? = null,
+    val httpPath: MutableList<String> = LinkedList()
 ) {
     fun freeze() = EndpointMetadata(httpMethod, httpPath.toList())
 }
@@ -23,7 +26,11 @@ tailrec fun parseMutableMetadataFromSelector(route: Route?, metadata: MutableEnd
     when (selector) {
         is HttpMethodRouteSelector -> metadata.httpMethod = selector.method.value
         is PathSegmentConstantRouteSelector -> metadata.httpPath += selector.value
-        else -> {/* TODO avoid ignoring silently */}
+        is PathSegmentParameterRouteSelector -> metadata.httpPath += selector.prefix.orEmpty() + "{${selector.name}}" +
+                selector.suffix.orEmpty()
+        else -> {
+            /* TODO avoid ignoring silently */
+        }
     }
     parseMutableMetadataFromSelector(route.parent, metadata)
 }
@@ -31,7 +38,7 @@ tailrec fun parseMutableMetadataFromSelector(route: Route?, metadata: MutableEnd
 fun parseMetadataFromRoute(route: Route): EndpointMetadata {
     val res = MutableEndpointMetadata().apply { parseMutableMetadataFromSelector(route, this) }
     return EndpointMetadata(
-            httpMethod = res.httpMethod,
-            httpPath = res.httpPath
+        httpMethod = res.httpMethod,
+        httpPath = res.httpPath
     )
 }
