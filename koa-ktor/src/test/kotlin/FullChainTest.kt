@@ -1,10 +1,12 @@
 package guru.zoroark.koa.ktor
 
 import guru.zoroark.koa.dsl.schema
-import io.ktor.application.*
-import io.ktor.response.*
-import io.ktor.routing.*
-import io.ktor.server.testing.*
+import io.ktor.application.call
+import io.ktor.application.install
+import io.ktor.response.respond
+import io.ktor.routing.get
+import io.ktor.routing.routing
+import io.ktor.server.testing.withTestApplication
 import kotlin.test.Test
 
 data class ExampleDataClass(val a: String, val b: Int)
@@ -49,9 +51,7 @@ class FullChainTest {
 
                 application.koa.makeOpenApiDocument()
             }
-        }) {
-
-        }
+        }) {}
     }
 
     @Test
@@ -83,10 +83,20 @@ class FullChainTest {
                     }
                 }
 
+                get("/test/c/my{someParameter}") {
+                    call.respond(call.parameters["someParameter"] ?: "null")
+                } describe {
+                    "someParameter" pathParameter {
+                        description = "a parameter"
+                        schema<String>("bruh")
+                    }
+                    200 response "text/string" {
+                        description = "the parameter from the request"
+                    }
+                }
+
                 application.koa.makeOpenApiDocument()
             }
-        }) {
-
-        }
+        }) {}
     }
 }
