@@ -1,0 +1,8 @@
+{
+    "dslcomponent": {
+        "scope": "markdown",
+        "body": "### ${1}\n\n* DSL interface: `${1}Dsl`\n* Builder class: `${1}Builder`\n* Available DSLs:\n  * `${1}Dsl` (direct)\n* Output: `${1} (io.swagger.v3.oas.models.${2})`\n\n${3}\n\n#### Properties\n\n${4}\n\n#### Example\n\n${5}",
+        "description": "A DSL component in the docs",
+        "prefix": "dslcmp"
+    }
+}
