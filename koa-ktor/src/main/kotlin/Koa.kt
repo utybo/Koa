@@ -39,7 +39,8 @@ class Koa(config: Configuration) {
             paths = Paths().apply {
                 pathItems.forEach { (k, v) -> addPathItem(k, v) }
             }
-            components = Components().apply {
+            if (components == null) components = Components()
+            components.apply {
                 for ((schemaName, schema) in storedSchemas)
                     addSchemas(schemaName, schema)
             }

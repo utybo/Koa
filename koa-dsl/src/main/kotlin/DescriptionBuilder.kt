@@ -5,8 +5,10 @@ import io.swagger.v3.oas.models.Operation
 import io.swagger.v3.oas.models.parameters.Parameter
 import io.swagger.v3.oas.models.responses.ApiResponse
 import io.swagger.v3.oas.models.responses.ApiResponses
+import io.swagger.v3.oas.models.security.SecurityRequirement
 
 @KoaDsl
+@Suppress("TooManyFunctions")
 class DescriptionBuilder(private val context: KoaDslContext) : Builder<Operation> {
     var summary: String? = null
     val responses = mutableMapOf<Int, Builder<ApiResponse>>()
@@ -16,8 +18,19 @@ class DescriptionBuilder(private val context: KoaDslContext) : Builder<Operation
     var externalDocsUrl: String? = null
     var requestBody: RequestBodyBuilder? = null
     val parameters = mutableListOf<Builder<Parameter>>()
+    var securityRequirements = mutableListOf<SecurityRequirement>()
 
-    // TODO operationId, callbacks, security, servers
+    // TODO properly support AND scenarios between security requirements (right now it's OR only)
+
+    fun security(key: String) {
+        securityRequirements.add(SecurityRequirement().addList(key))
+    }
+
+    fun security(key: String, vararg scopes: String) {
+        securityRequirements.add(SecurityRequirement().addList(key, scopes.toList()))
+    }
+
+    // TODO operationId, callbacks, servers
     var deprecated: Boolean = false
 
     @KoaDsl
@@ -87,5 +100,6 @@ class DescriptionBuilder(private val context: KoaDslContext) : Builder<Operation
         deprecated = this@DescriptionBuilder.deprecated
         requestBody = this@DescriptionBuilder.requestBody?.build()
         parameters = this@DescriptionBuilder.parameters.map { it.build() }
+        security = this@DescriptionBuilder.securityRequirements
     }
 }

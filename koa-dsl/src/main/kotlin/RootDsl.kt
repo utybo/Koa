@@ -1,3 +1,7 @@
 package guru.zoroark.koa.dsl
 
-interface RootDsl : InfoDsl, TagsDsl
+import io.swagger.v3.oas.models.security.SecurityScheme
+
+interface RootDsl : InfoDsl, TagsDsl {
+    infix fun String.securityScheme(scheme: SecurityScheme)
+}
