@@ -35,10 +35,6 @@ tailrec fun parseMutableMetadataFromSelector(route: Route?, metadata: MutableEnd
     parseMutableMetadataFromSelector(route.parent, metadata)
 }
 
-fun parseMetadataFromRoute(route: Route): EndpointMetadata {
-    val res = MutableEndpointMetadata().apply { parseMutableMetadataFromSelector(route, this) }
-    return EndpointMetadata(
-        httpMethod = res.httpMethod,
-        httpPath = res.httpPath
-    )
+fun parseMetadataFromRoute(route: Route): MutableEndpointMetadata {
+    return MutableEndpointMetadata().apply { parseMutableMetadataFromSelector(route, this) }
 }
