@@ -60,6 +60,8 @@ class SecuritySchemeBuilder : SecuritySchemeDsl, Builder<SecurityScheme> {
     override fun build(): SecurityScheme {
         return SecurityScheme().apply {
             type = this@SecuritySchemeBuilder.type
+            description = this@SecuritySchemeBuilder.description
+            name = this@SecuritySchemeBuilder.name
             `in` = this@SecuritySchemeBuilder.inLocation
             bearerFormat = this@SecuritySchemeBuilder.bearerFormat
             scheme = this@SecuritySchemeBuilder.scheme
