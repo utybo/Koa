@@ -43,6 +43,7 @@ interface OperationDsl {
 
     @KoaDsl
     infix fun String.requestBody(builder: BodyStub.() -> Unit)
+
     @KoaDsl
     infix fun Int.response(stub: BodyStub)
 }
@@ -73,7 +74,6 @@ class OperationBuilder(private val context: KoaDslContext) : OperationDsl, Build
     override fun security(key: String, vararg scopes: String) {
         securityRequirements.add(SecurityRequirement().addList(key, scopes.toList()))
     }
-
 
     @KoaDsl
     override infix fun Int.response(builder: ResponseBuilder.() -> Unit) {
