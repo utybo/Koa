@@ -4,10 +4,13 @@ import guru.zoroark.koa.dsl.schema
 import io.ktor.application.call
 import io.ktor.application.install
 import io.ktor.response.respond
+import io.ktor.response.respondText
 import io.ktor.routing.get
+import io.ktor.routing.route
 import io.ktor.routing.routing
 import io.ktor.server.testing.withTestApplication
 import kotlin.test.Test
+import kotlin.test.assertEquals
 
 data class ExampleDataClass(val a: String, val b: Int)
 
@@ -49,7 +52,7 @@ class FullChainTest {
                     }
                 }
 
-                application.koa.makeOpenApiDocument()
+                application.koa.buildOpenApiDocument()
             }
         }) {}
     }
@@ -95,8 +98,62 @@ class FullChainTest {
                     }
                 }
 
-                application.koa.makeOpenApiDocument()
+                application.koa.buildOpenApiDocument()
             }
         }) {}
+    }
+
+    @Test
+    fun `Test with describeSubroutes`() {
+        withTestApplication({
+            install(Koa) {
+                title = "My example API"
+                version = "0.0.0"
+                "foo" tag {
+                    description = "A tag"
+                }
+            }
+
+            routing {
+                route("/foo") {
+                    describeSubroutes {
+                        tags += "foo"
+                    }
+
+                    get("/bar") {
+                        call.respondText("bar")
+                    } describe {
+                        description = "yes"
+                    }
+
+                    routeWithDescription({
+                        tags += "one"
+                    }) {
+                        get("one") {
+                            call.respondText("one")
+                        } describe {
+                            description = "one"
+                        }
+                    }
+
+                    get("/baz") {
+                        call.respondText("baz")
+                    } describe {
+                        description = "yes"
+                    }
+                }
+
+                get("/unrelated") {
+                    call.respondText("unrelated")
+                } describe {
+                    description = "bruh"
+                }
+            }
+        }) {
+            val openApi = application.koa.buildOpenApiObject()
+            assertEquals(4, openApi.paths.size)
+            assertEquals(3, openApi.paths.count { it.value.get.tags.contains("foo") })
+            assertEquals(1, openApi.paths.count { it.value.get.tags.contains("one") })
+        }
     }
 }

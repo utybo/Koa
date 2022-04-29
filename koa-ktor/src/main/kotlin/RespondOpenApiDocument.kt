@@ -7,6 +7,6 @@ import io.ktor.response.respondText
 
 suspend fun ApplicationCall.respondOpenApiDocument() {
     respondText(ContentType.Application.Json, HttpStatusCode.OK) {
-        application.koa.makeOpenApiDocument()
+        application.koa.buildOpenApiDocument()
     }
 }
