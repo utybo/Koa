@@ -14,19 +14,32 @@ enum class ParameterKind {
     Cookie
 }
 
+interface ParameterDsl : MediaTypeDsl {
+    val name: String
+    val kind: ParameterKind
+
+    var description: String?
+    var required: Boolean?
+    var deprecated: Boolean?
+    var allowEmptyValue: Boolean?
+    var style: Parameter.StyleEnum?
+    var explode: Boolean?
+    var allowReserved: Boolean?
+}
+
 @KoaDsl
 class ParameterBuilder(
     private val context: KoaDslContext,
-    val name: String,
-    val kind: ParameterKind
-) : Builder<Parameter>, MediaTypeDsl {
-    var description: String? = null
-    var required: Boolean? = null
-    var deprecated: Boolean? = null
-    var allowEmptyValue: Boolean? = null
-    var style: Parameter.StyleEnum? = null
-    var explode: Boolean? = null
-    var allowReserved: Boolean? = null
+    override val name: String,
+    override val kind: ParameterKind
+) : Builder<Parameter>, ParameterDsl {
+    override var description: String? = null
+    override var required: Boolean? = null
+    override var deprecated: Boolean? = null
+    override var allowEmptyValue: Boolean? = null
+    override var style: Parameter.StyleEnum? = null
+    override var explode: Boolean? = null
+    override var allowReserved: Boolean? = null
     override var schema: Schema<*>? = null
     override var example: Any? = null
 

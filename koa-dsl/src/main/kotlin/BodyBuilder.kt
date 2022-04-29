@@ -2,6 +2,7 @@ package guru.zoroark.koa.dsl
 
 import io.swagger.v3.oas.models.media.Content
 import io.swagger.v3.oas.models.media.MediaType
+import io.swagger.v3.oas.models.parameters.RequestBody
 import io.swagger.v3.oas.models.responses.ApiResponse
 
 @KoaDsl
@@ -19,6 +20,17 @@ abstract class BodyBuilder(protected val context: KoaDslContext) : PartialBodyDs
 class ResponseBuilder(context: KoaDslContext) : BodyBuilder(context), Builder<ApiResponse> {
     override fun build(): ApiResponse = ApiResponse().apply {
         description(this@ResponseBuilder.description)
+        content = Content().apply {
+            for ((typeString, typeBuilder) in contentTypes) {
+                addMediaType(typeString, typeBuilder.build())
+            }
+        }
+    }
+}
+
+class RequestBodyBuilder(context: KoaDslContext) : BodyBuilder(context), Builder<RequestBody> {
+    override fun build(): RequestBody = RequestBody().apply {
+        description = this@RequestBodyBuilder.description
         content = Content().apply {
             for ((typeString, typeBuilder) in contentTypes) {
                 addMediaType(typeString, typeBuilder.build())
