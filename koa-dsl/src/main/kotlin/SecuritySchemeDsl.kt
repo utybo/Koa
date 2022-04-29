@@ -4,6 +4,8 @@ import io.swagger.v3.oas.models.security.SecurityScheme
 
 interface SecuritySchemeDsl {
     var type: SecurityScheme.Type?
+    var description: String?
+    var name: String?
     var inLocation: SecurityScheme.In?
     var bearerFormat: String?
     var scheme: String?
@@ -48,6 +50,8 @@ inline val SecuritySchemeDsl.inQuery: Unit
 
 class SecuritySchemeBuilder : SecuritySchemeDsl, Builder<SecurityScheme> {
     override var type: SecurityScheme.Type? = null
+    override var description: String? = null
+    override var name: String? = null
     override var inLocation: SecurityScheme.In? = null
     override var bearerFormat: String? = null
     override var openIdConnectUrl: String? = null
@@ -62,5 +66,4 @@ class SecuritySchemeBuilder : SecuritySchemeDsl, Builder<SecurityScheme> {
             openIdConnectUrl = this@SecuritySchemeBuilder.openIdConnectUrl
         }
     }
-
 }

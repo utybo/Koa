@@ -2,7 +2,6 @@ package guru.zoroark.koa.ktor
 
 import guru.zoroark.koa.dsl.OperationBuilder
 import guru.zoroark.koa.dsl.KoaDsl
-import guru.zoroark.koa.dsl.OperationDsl
 import io.ktor.routing.HttpMethodRouteSelector
 import io.ktor.routing.Route
 import io.ktor.routing.RouteSelector

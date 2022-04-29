@@ -1,7 +1,6 @@
 package guru.zoroark.koa.ktor
 
 import guru.zoroark.koa.dsl.KoaDslContext
-import guru.zoroark.koa.dsl.OperationDsl
 import guru.zoroark.koa.dsl.RootBuilder
 import guru.zoroark.koa.dsl.RootDsl
 import io.ktor.application.Application
@@ -75,7 +74,6 @@ class Koa(config: Configuration) {
             }
         }
     }
-
 }
 
 val Application.koa: Koa
