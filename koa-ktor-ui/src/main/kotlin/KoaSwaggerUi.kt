@@ -1,20 +1,14 @@
 package guru.zoroark.koa.ktor.ui
 
-import io.ktor.application.ApplicationCallPipeline
-import io.ktor.application.ApplicationFeature
-import io.ktor.application.application
-import io.ktor.application.call
-import io.ktor.application.feature
+
 import io.ktor.http.ContentType
 import io.ktor.http.HttpStatusCode
 import io.ktor.http.content.OutgoingContent
-import io.ktor.http.content.resourceClasspathResource
 import io.ktor.http.defaultForFileExtension
-import io.ktor.response.respond
-import io.ktor.response.respondText
-import io.ktor.routing.Route
-import io.ktor.routing.application
-import io.ktor.routing.get
+import io.ktor.server.application.*
+import io.ktor.server.http.content.*
+import io.ktor.server.response.*
+import io.ktor.server.routing.*
 import io.ktor.util.AttributeKey
 import io.ktor.util.InternalAPI
 import java.util.Properties
@@ -24,7 +18,7 @@ private const val SWAGGER_UI_POM_LOCATION: String = "META-INF/maven/org.webjars/
 class KoaSwaggerUi(private val classpathPath: String) {
     class Configuration
 
-    companion object Feature : ApplicationFeature<ApplicationCallPipeline, Configuration, KoaSwaggerUi> {
+    companion object Plugin : BaseApplicationPlugin<ApplicationCallPipeline, Configuration, KoaSwaggerUi> {
         override val key = AttributeKey<KoaSwaggerUi>("KoaSwaggerUi")
 
         private fun computeSwaggerUiPath(): String {
@@ -57,7 +51,7 @@ class KoaSwaggerUi(private val classpathPath: String) {
 fun Route.swaggerUi(path: String, openApiPath: String) {
     val indexContent by lazy {
         val originalIndex = KoaSwaggerUi::class.java.classLoader
-            .getResourceAsStream(application.feature(KoaSwaggerUi).getPathFor("index.html"))
+            .getResourceAsStream(application.plugin(KoaSwaggerUi).getPathFor("index.html"))
             .use { it!!.bufferedReader().readText() }
         originalIndex.replace("url: \"https://petstore.swagger.io/v2/swagger.json\"", "url: \"$openApiPath\"")
     }
@@ -66,7 +60,7 @@ fun Route.swaggerUi(path: String, openApiPath: String) {
         if (fileName == "index.html") {
             call.respondText(ContentType.Text.Html) { indexContent }
         } else {
-            val result = application.feature(KoaSwaggerUi).getContentFor(fileName)
+            val result = application.plugin(KoaSwaggerUi).getContentFor(fileName)
             if (result != null) call.respond(result)
             else call.respond(HttpStatusCode.NotFound)
         }

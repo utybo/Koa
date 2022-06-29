@@ -1,13 +1,9 @@
 package guru.zoroark.koa.ktor
 
 import guru.zoroark.koa.dsl.schema
-import io.ktor.application.call
-import io.ktor.application.install
-import io.ktor.response.respond
-import io.ktor.response.respondText
-import io.ktor.routing.get
-import io.ktor.routing.route
-import io.ktor.routing.routing
+import io.ktor.server.application.*
+import io.ktor.server.response.*
+import io.ktor.server.routing.*
 import io.ktor.server.testing.withTestApplication
 import kotlin.test.Test
 import kotlin.test.assertEquals
