@@ -1,6 +1,6 @@
 [versions]
 kotlin = "1.6.20"
-ktor = "2.0.2"
+ktor = "2.0.3"
 detekt = "1.18.1"
 junit = "5.8.2"
 mockk = "1.12.4"
