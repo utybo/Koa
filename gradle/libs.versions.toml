@@ -7,7 +7,7 @@ mockk = "1.12.4"
 dokka = "1.6.21"
 logback = "1.2.11"
 swaggerCore = "2.2.1"
-swaggerUi = "4.11.1"
+swaggerUi = "4.8.0"
 
 [libraries]
 
