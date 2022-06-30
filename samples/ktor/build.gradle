@@ -7,6 +7,7 @@ dependencies {
     implementation project(":koa-ktor-ui")
 
     implementation libs.ktor.server.netty
+    implementation libs.ktor.server.content.negotiation
     implementation libs.ktor.server.jackson
     implementation libs.logback
 }

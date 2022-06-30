@@ -1,13 +1,13 @@
 [versions]
-kotlin = "1.6.10"
-ktor = "1.6.7"
+kotlin = "1.6.20"
+ktor = "2.0.3"
 detekt = "1.18.1"
-junit = "5.7.2"
-mockk = "1.12.0"
-dokka = "1.6.10"
+junit = "5.8.2"
+mockk = "1.12.4"
+dokka = "1.6.21"
 logback = "1.2.11"
-swaggerCore = "2.1.12"
-swaggerUi = "4.5.2"
+swaggerCore = "2.2.1"
+swaggerUi = "4.8.0"
 
 [libraries]
 
@@ -17,12 +17,13 @@ kotlin-stdlib = { module = "org.jetbrains.kotlin:kotlin-stdlib-jdk8", version.re
 
 ktor-server-core = { module = "io.ktor:ktor-server-core", version.ref = "ktor" }
 ktor-server-netty = { module = "io.ktor:ktor-server-netty", version.ref = "ktor" }
-ktor-server-jackson = { module = "io.ktor:ktor-jackson", version.ref = "ktor" }
+ktor-server-content-negotiation = { module = "io.ktor:ktor-server-content-negotiation", version.ref = "ktor" }
+ktor-server-jackson = { module = "io.ktor:ktor-serialization-jackson", version.ref = "ktor" }
 
 swaggerCore-models = { module = "io.swagger.core.v3:swagger-models", version.ref = "swaggerCore" }
 swaggerCore-core = { module = "io.swagger.core.v3:swagger-core", version.ref = "swaggerCore" }
 
-swaggerUi = { module = "org.webjars:swagger-ui", version.ref = "swaggerUi"}
+swaggerUi = { module = "org.webjars:swagger-ui", version.ref = "swaggerUi" }
 
 logback = { module = "ch.qos.logback:logback-classic", version.ref = "logback" }
 

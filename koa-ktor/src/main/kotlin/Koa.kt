@@ -3,11 +3,11 @@ package guru.zoroark.koa.ktor
 import guru.zoroark.koa.dsl.KoaDslContext
 import guru.zoroark.koa.dsl.RootBuilder
 import guru.zoroark.koa.dsl.RootDsl
-import io.ktor.application.Application
-import io.ktor.application.ApplicationCallPipeline
-import io.ktor.application.ApplicationFeature
-import io.ktor.application.feature
-import io.ktor.routing.Route
+import io.ktor.server.application.Application
+import io.ktor.server.application.ApplicationCallPipeline
+import io.ktor.server.application.BaseApplicationPlugin
+import io.ktor.server.application.plugin
+import io.ktor.server.routing.Route
 import io.ktor.util.AttributeKey
 import io.swagger.v3.core.util.Json
 import io.swagger.v3.oas.models.Components
@@ -25,11 +25,11 @@ class Koa(config: Configuration) {
 
     class Configuration(internal val builder: RootBuilder = RootBuilder()) : RootDsl by builder
 
-    companion object Feature : ApplicationFeature<ApplicationCallPipeline, Configuration, Koa> {
+    companion object Plugin : BaseApplicationPlugin<ApplicationCallPipeline, Configuration, Koa> {
         override val key = AttributeKey<Koa>("Koa")
 
         override fun install(pipeline: ApplicationCallPipeline, configure: Configuration.() -> Unit): Koa =
-                Koa(Configuration().apply(configure))
+            Koa(Configuration().apply(configure))
     }
 
     fun addOperation(path: String, method: PathItem.HttpMethod, operation: Operation) {
@@ -76,8 +76,7 @@ class Koa(config: Configuration) {
     }
 }
 
-val Application.koa: Koa
-    get() = feature(Koa)
+val Application.koa: Koa get() = plugin(Koa)
 
 private inline fun Route.traverseParents(elementHandler: (Route) -> Unit) {
     var current: Route? = this
