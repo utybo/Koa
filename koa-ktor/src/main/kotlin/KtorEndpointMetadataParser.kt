@@ -1,7 +1,10 @@
 package guru.zoroark.koa.ktor
 
 
-import io.ktor.server.routing.*
+import io.ktor.server.routing.HttpMethodRouteSelector
+import io.ktor.server.routing.PathSegmentConstantRouteSelector
+import io.ktor.server.routing.PathSegmentParameterRouteSelector
+import io.ktor.server.routing.Route
 import java.util.LinkedList
 
 data class EndpointMetadata(

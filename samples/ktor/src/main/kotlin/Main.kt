@@ -11,14 +11,19 @@ import guru.zoroark.koa.ktor.ui.swaggerUi
 import io.ktor.http.HttpStatusCode
 import io.ktor.http.HttpStatusCode.Companion.NoContent
 import io.ktor.http.HttpStatusCode.Companion.OK
-import io.ktor.serialization.jackson.*
+import io.ktor.serialization.jackson.jackson
+import io.ktor.server.application.call
+import io.ktor.server.application.install
 import io.ktor.server.engine.embeddedServer
 import io.ktor.server.netty.Netty
-import io.ktor.server.application.*
-import io.ktor.server.plugins.contentnegotiation.*
-import io.ktor.server.request.*
-import io.ktor.server.response.*
-import io.ktor.server.routing.*
+import io.ktor.server.plugins.contentnegotiation.ContentNegotiation
+import io.ktor.server.request.receive
+import io.ktor.server.response.respond
+import io.ktor.server.routing.get
+import io.ktor.server.routing.patch
+import io.ktor.server.routing.put
+import io.ktor.server.routing.route
+import io.ktor.server.routing.routing
 import io.swagger.v3.oas.models.media.StringSchema
 
 data class ServerState(var myString: String, var myNumber: Int)

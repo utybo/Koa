@@ -1,9 +1,14 @@
 package guru.zoroark.koa.ktor
 
-import guru.zoroark.koa.dsl.OperationBuilder
 import guru.zoroark.koa.dsl.KoaDsl
-import io.ktor.server.routing.*
-import io.ktor.util.*
+import guru.zoroark.koa.dsl.OperationBuilder
+import io.ktor.server.routing.HttpMethodRouteSelector
+import io.ktor.server.routing.Route
+import io.ktor.server.routing.RouteSelector
+import io.ktor.server.routing.RouteSelectorEvaluation
+import io.ktor.server.routing.RoutingResolveContext
+import io.ktor.server.routing.application
+import io.ktor.util.KtorDsl
 import io.swagger.v3.oas.models.PathItem
 
 @KtorDsl

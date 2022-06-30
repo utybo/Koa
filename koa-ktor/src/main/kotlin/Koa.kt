@@ -3,11 +3,18 @@ package guru.zoroark.koa.ktor
 import guru.zoroark.koa.dsl.KoaDslContext
 import guru.zoroark.koa.dsl.RootBuilder
 import guru.zoroark.koa.dsl.RootDsl
-import io.ktor.server.application.*
-import io.ktor.server.routing.*
-import io.ktor.util.*
+import io.ktor.server.application.Application
+import io.ktor.server.application.ApplicationCallPipeline
+import io.ktor.server.application.BaseApplicationPlugin
+import io.ktor.server.application.plugin
+import io.ktor.server.routing.Route
+import io.ktor.util.AttributeKey
 import io.swagger.v3.core.util.Json
-import io.swagger.v3.oas.models.*
+import io.swagger.v3.oas.models.Components
+import io.swagger.v3.oas.models.OpenAPI
+import io.swagger.v3.oas.models.Operation
+import io.swagger.v3.oas.models.PathItem
+import io.swagger.v3.oas.models.Paths
 import io.swagger.v3.oas.models.media.Schema
 
 class Koa(config: Configuration) {
