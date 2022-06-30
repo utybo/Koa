@@ -1,6 +1,5 @@
 package guru.zoroark.koa.ktor
 
-
 import io.ktor.server.routing.HttpMethodRouteSelector
 import io.ktor.server.routing.PathSegmentConstantRouteSelector
 import io.ktor.server.routing.PathSegmentParameterRouteSelector
