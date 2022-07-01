@@ -1,0 +1,37 @@
+repositories {
+    mavenCentral()
+    maven { url 'https://gitlab.com/api/v4/projects/29365238/packages/maven' }
+}
+
+configurations {
+    servine
+}
+
+dependencies {
+    servine 'guru.zoroark.servine:servine:0.0.2-SNAPSHOT'
+}
+
+def needExpansion = [ "_coverpage.md" ]
+
+def buildDocsTask = tasks.register("buildDocs", Copy) {
+    from project.layout.projectDirectory.dir("src")
+    into project.layout.buildDirectory.dir("docs")
+
+    def template = [version: project.version]
+    inputs.property("project.version", project.version)
+    filesMatching(needExpansion) {
+        expand template
+    }
+}
+
+def serveDocsTask = tasks.register("serveDocs", JavaExec) {
+    main = "guru.zoroark.servine.app.AppKt"
+    classpath = configurations.servine
+
+    def params = [project.layout.buildDirectory.dir("docs").get().toString(), "-r"]
+    args(params)
+
+    dependsOn buildDocsTask
+}
+
+version = rootProject.version
