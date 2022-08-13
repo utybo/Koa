@@ -1,4 +1,12 @@
-# `koa` - Kotlin and Ktor OpenAPI
+# Heads up!
+
+#### Koa has been superseded by [Tegral OpenAPI](https://tegral.zoroark.guru/docs/modules/core/openapi/). See [here](https://github.com/utybo/Koa/issues/9) for more information.
+
+-----
+
+**Original README**
+
+### `koa` - Kotlin and Ktor OpenAPI
 
 Koa intends to be a fully functional DSL for OpenAPI in Kotlin, including a Ktor plugin to add OpenAPI to your server Kotlin applications.
 
